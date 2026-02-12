@@ -46,7 +46,7 @@ const ProfileImage = memo(() => (
           <div className="absolute inset-0 border-4 border-white/20 rounded-full z-20 transition-all duration-700 group-hover:border-white/40 group-hover:scale-105" />
           
           {/* Optimized overlay effects - disabled on mobile */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 z-10 transition-opacity duration-700 group-hover:opacity-0 hidden sm:block" />
+         {/* <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 z-10 transition-opacity duration-700 group-hover:opacity-0 hidden sm:block" /> */}
           <div className="absolute inset-0 bg-gradient-to-t from-purple-500/20 via-transparent to-blue-500/20 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-700 hidden sm:block" />
           
           <img
@@ -239,16 +239,21 @@ const AboutPage = () => {
       </div>
 
             <div className="flex flex-col lg:flex-row items-center lg:items-start gap-4 lg:gap-4 lg:px-0 w-full">
-              <a href="https://https://drive.google.com/drive/folders/12909IcbMxCj0u0U6D-tuyltEhyzmfnB1" className="w-full lg:w-auto">
-              <button 
-                data-aos="fade-up"
-                data-aos-duration="800"
-                className="w-full lg:w-auto sm:px-6 py-2 sm:py-3 rounded-lg bg-gradient-to-r from-blue-800 to-cyan-400 text-white font-medium transition-all duration-300 hover:scale-105 flex items-center justify-center lg:justify-start gap-2 shadow-lg hover:shadow-xl "
-              >
-                <FileText className="w-4 h-4 sm:w-5 sm:h-5" /> Download CV
-              </button>
-              </a>
-              <a href="#Portofolio" className="w-full lg:w-auto">
+                <a
+        href="/Ahmed_Guedri_Curriculum_vitae__Version_FR_.pdf" // PDF in public folder
+        download="Ahmed_Guedri_Curriculum_vitae__Version_FR_.pdf" // File name when downloaded
+        className="w-full lg:w-auto"
+      >
+        <button
+          data-aos="fade-up"
+          data-aos-duration="800"
+          className="w-full lg:w-auto sm:px-6 py-2 sm:py-3 rounded-lg bg-gradient-to-r from-blue-800 to-cyan-400 text-white font-medium transition-all duration-300 hover:scale-105 flex items-center justify-center lg:justify-start gap-2 shadow-lg hover:shadow-xl"
+        >
+          <FileText className="w-4 h-4 sm:w-5 sm:h-5" />
+          Download CV
+        </button>
+      </a>
+              <a href="#projects" className="w-full lg:w-auto">
               <button 
                 data-aos="fade-up"
                 data-aos-duration="1000"

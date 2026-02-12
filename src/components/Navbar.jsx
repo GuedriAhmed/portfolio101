@@ -4,12 +4,13 @@ import { Menu, X } from "lucide-react";
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
-    const [activeSection, setActiveSection] = useState("Home");
+    const [activeSection, setActiveSection] = useState("hero");
     
     const navItems = [
-        { href: "#Home", label: "Home" },
+        { href: "#hero", label: "Home" },
         { href: "#About", label: "About" },
         { href: "#skills", label: "Skills" },
+        { href: "#experience", label: "Experience" },
         { href: "#projects", label: "Projects" },
         { href: "#contact", label: "Contact" },
     ];
@@ -85,7 +86,7 @@ const Navbar = () => {
                             onClick={(e) => scrollToSection(e, "#Home")}
                             className="text-xl font-bold bg-gradient-to-r from-blue-800 to-cyan-400 bg-clip-text text-transparent"
                         >
-                            AHMED
+                            Ahmed GUEDRI
                         </a>
                     </div>
         

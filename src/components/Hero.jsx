@@ -54,7 +54,7 @@ export default function Hero() {
 
   return (
     <section
-      id="home"
+      id="hero"
       data-aos="fade-up"
          className="pt-24 md:pt-0 min-h-screen flex flex-col-reverse md:flex-row items-center justify-between px-6 md:px-20 text-white"
 
@@ -93,7 +93,7 @@ export default function Hero() {
 
         {/* Skills tags */}
         <div className="flex flex-wrap gap-2 mt-4">
-          {["React", "Javascript", "Node.js", "Tailwind"].map((skill) => (
+          {["React", "Spring Boot", ".NET", "Angular"].map((skill) => (
             <span
               key={skill}
               className="bg-gray-800 px-3 py-1 rounded-full text-sm text-gray-200 border border-gray-700"
@@ -129,7 +129,7 @@ export default function Hero() {
        <div className="flex space-x-4 mt-6">
   {/* GitHub */}
   <a
-    href="#"
+    href="https://github.com/GuedriAhmed"
     className="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-lg shadow-md hover:bg-gray-500 transition-colors duration-300"
   >
     <i className="fab fa-github text-white text-lg"></i>
@@ -137,7 +137,7 @@ export default function Hero() {
 
   {/* LinkedIn */}
   <a
-    href="#"
+    href="https://www.linkedin.com/in/ahmed-guedri-019935288/"
     className="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-lg shadow-md hover:bg-blue-600 transition-colors duration-300"
   >
     <i className="fab fa-linkedin-in text-white text-lg"></i>
@@ -145,13 +145,13 @@ export default function Hero() {
 
   {/* Instagram */}
   <a
-    href="#"
+    href="https://www.instagram.com/ahmed_guedrii/"
     className="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-lg shadow-md hover:bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 transition-colors duration-300"
   >
     <i className="fab fa-instagram text-white text-lg"></i>
   </a>
   <a
-    href="https://facebook.com"
+    href="https://www.facebook.com/guedri.Midou/"
     target="_blank"
     rel="noopener noreferrer"
     className="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-800 shadow-md hover:shadow-blue-600/50 transition-all duration-300"
