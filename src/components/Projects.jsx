@@ -1,144 +1,83 @@
-import React, { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import React from "react";
+import { ArrowUpRight } from "lucide-react";
+import { projects } from "../data/portfolio";
 
 export default function Projects() {
-  useEffect(() => {
-    AOS.init({ duration: 800, once: true });
-  }, []);
-
-  const projects = [
-    {
-      title: "Tunisian Trek Wave (TTWave)",
-      desc: "Platform for managing and discovering outdoor activities in Tunisia with booking, real-time communication and itinerary customization.",
-      image: "/projects/ttwave.png",
-      technologies: ["Angular", "Microservices", "Authentication", "Payment"],
-      github: "https://github.com/GuedriAhmed",
-    },
-
-   {
-  title: "Chess Game",
-  desc: "Online chess game built with Spring Boot and Angular, featuring real-time gameplay, multiplayer support, and intuitive UI.",
-  image: "/projects/chess.png", // replace with the actual path to your chess project image
-  technologies: ["Spring Boot", "Angular", "WebSocket", "Authentication"],
-  github: "https://github.com/GuedriAhmed",
-},
-
-{
-  title: "CEDIMES",
-  desc: "Redesigned and modernized a 10+ year-old WordPress website into a fully responsive Angular web platform, improving page load speed by 50% and enhancing user engagement.",
-  image: "/projects/cedimes.png", // replace with your actual CEDIMES project image
-  technologies: ["Angular", "Spring Boot", "Responsive Design", "Performance Optimization"],
-  github: "https://github.com/GuedriAhmed",
-},
-
-{
-  title: "Portfolio 101",
-  desc: "Personal portfolio website showcasing projects, skills, and experience, built with modern web technologies for responsive and interactive design.",
-  image: "/projects/portfolio101.png", // replace with your actual image path
-  technologies: ["React", "Tailwind CSS", "AOS", "EmailJS"],
-  github: "https://github.com/GuedriAhmed",
-},
-
-
-
-    {
-      title: "CulTechConnect",
-      desc: "Platform connecting cultures worldwide through events, collaboration, and intercultural exchange.",
-      image: "/projects/cultech.png",
-      technologies: ["Spring Boot", "Angular"],
-      github: "https://github.com/GuedriAhmed",
-    },
-
-    {
-      title: "Ratatoskr",
-      desc: "Tunisian e-commerce platform connecting buyers and suppliers with advanced marketing and content management features.",
-      image: "/projects/ratatoskr.png",
-      technologies: ["Spring Boot", "Angular"],
-      github: "https://github.com/GuedriAhmed",
-    },
-
-    {
-      title: "Employee Management System",
-      desc: "Full stack application with authentication, dashboard, and role-based access using React, Node.js and MongoDB.",
-      image: "/projects/ems.png",
-      technologies: ["React", "Node.js", "MongoDB", "JWT"],
-      github: "https://github.com/GuedriAhmed",
-    },
-  ];
+  const featuredProjects = projects.filter((project) => project.featured);
+  const moreProjects = projects.filter((project) => !project.featured);
 
   return (
-    <section
-      id="projects"
-      data-aos="fade-up"
-      className="py-20"
-     
-    >
-      <div className="container mx-auto px-6">
+    <section id="projects" className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
+      <div className="mb-12 max-w-3xl">
+        <p className="text-xs uppercase tracking-[0.3em] text-cyan-300">Selected Work</p>
+        <h2 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">Selected work that speaks for itself</h2>
+      </div>
 
-        {/* Title */}
-        <h2 className="text-3xl font-bold mb-12 text-white text-center">
-          Projects
-        </h2>
-
-        {/* Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, i) => (
-            <div
-              key={i}
-              className="group bg-gray-800/50 backdrop-blur-md border border-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition duration-500"
-              data-aos="zoom-in"
-              data-aos-delay={i * 100}
-            >
-
-              {/* Image */}
-              <div className="relative h-52 overflow-hidden">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
-                />
-
-                {/* Overlay */}
-                <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-5 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-                  >
-                    View Project
-                  </a>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-6 text-left">
-                <h3 className="text-xl font-semibold text-white">
-                  {project.title}
-                </h3>
-
-                <p className="mt-2 text-gray-300 text-sm">
-                  {project.desc}
-                </p>
-
-                {/* Technologies */}
-                <div className="flex flex-wrap gap-2 mt-4">
-                  {project.technologies.map((tech, index) => (
-                    <span
-                      key={index}
-                      className="px-3 py-1 text-xs bg-gray-800/50 backdrop-blur-md text-gray-300 rounded-full"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-              </div>
+      <div className="grid gap-6 lg:grid-cols-2">
+        {featuredProjects.map((project) => (
+          <article
+            key={project.title}
+            className="group overflow-hidden rounded-[2rem] border border-white/8 bg-white/[0.035] shadow-[0_18px_60px_rgba(2,8,23,0.24)] backdrop-blur-xl"
+          >
+            <div className="relative h-72 overflow-hidden">
+              <img src={project.image} alt={project.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#06101c] via-[#06101c]/10 to-transparent" />
             </div>
-          ))}
-        </div>
+            <div className="p-6">
+              <h3 className="text-xl font-semibold text-white">{project.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-slate-300">{project.desc}</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {project.technologies.map((tech) => (
+                  <span key={tech} className="rounded-full border border-white/10 bg-[#0a1423] px-3 py-1.5 text-[11px] uppercase tracking-[0.16em] text-slate-300">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-cyan-300 transition-colors duration-300 hover:text-cyan-100"
+              >
+                View Project
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
 
+      <div className="mt-6 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        {moreProjects.map((project) => (
+          <article
+            key={project.title}
+            className="group overflow-hidden rounded-[1.8rem] border border-white/8 bg-white/[0.035] shadow-[0_18px_60px_rgba(2,8,23,0.24)] backdrop-blur-xl"
+          >
+            <div className="relative h-52 overflow-hidden">
+              <img src={project.image} alt={project.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            </div>
+            <div className="p-6">
+              <h3 className="text-lg font-semibold text-white">{project.title}</h3>
+              <p className="mt-3 text-sm leading-7 text-slate-300">{project.desc}</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {project.technologies.map((tech) => (
+                  <span key={tech} className="rounded-full border border-white/10 bg-[#0a1423] px-3 py-1.5 text-[11px] uppercase tracking-[0.16em] text-slate-300">
+                    {tech}
+                  </span>
+                ))}
+              </div>
+              <a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex items-center gap-2 text-sm font-medium text-cyan-300 transition-colors duration-300 hover:text-cyan-100"
+              >
+                View Project
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+            </div>
+          </article>
+        ))}
       </div>
     </section>
   );

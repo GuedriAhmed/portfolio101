@@ -1,169 +1,97 @@
-import React, { useEffect, useState } from "react";
-import { FileText, Code, Award, Globe, ArrowUpRight, Sparkles, UserCheck } from "lucide-react"
-import AOS from "aos";
-import "aos/dist/aos.css";
-import heroImage from "../assets/hero.png"; // use your own image or the uploaded one
+import React from "react";
+import { ArrowUpRight } from "lucide-react";
+import heroImage from "../assets/hero.png";
+import { socialLinks } from "../data/portfolio";
+import IntroParticles from "./IntroParticles";
 
-// Typewriter component with proper looping between multiple texts
-function TypewriterLoop({ texts, speed = 150, pause = 1500 }) {
-  const [displayedText, setDisplayedText] = useState("");
-  const [textIndex, setTextIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [deleting, setDeleting] = useState(false);
-
-  useEffect(() => {
-    const currentText = texts[textIndex];
-    let timeout;
-
-    if (!deleting && charIndex < currentText.length) {
-      // typing
-      timeout = setTimeout(() => {
-        setDisplayedText(currentText.slice(0, charIndex + 1));
-        setCharIndex(charIndex + 1);
-      }, speed);
-    } else if (!deleting && charIndex === currentText.length) {
-      // pause before deleting
-      timeout = setTimeout(() => setDeleting(true), pause);
-    } else if (deleting && charIndex > 0) {
-      // deleting
-      timeout = setTimeout(() => {
-        setDisplayedText(currentText.slice(0, charIndex - 1));
-        setCharIndex(charIndex - 1);
-      }, speed / 2);
-    } else if (deleting && charIndex === 0) {
-      // switch to next text
-      setDeleting(false);
-      setTextIndex((prev) => (prev + 1) % texts.length);
-    }
-
-    return () => clearTimeout(timeout);
-  }, [charIndex, deleting, textIndex, texts, speed, pause]);
-
-  return (
-    <span>
-      {displayedText}
-      <span className="border-r-2 border-gray-300 animate-blink ml-1"></span>
-    </span>
-  );
-}
+const iconMap = {
+  GitHub: "ri-github-fill",
+  LinkedIn: "ri-linkedin-fill",
+  Instagram: "ri-instagram-line",
+  Facebook: "ri-facebook-circle-line",
+};
 
 export default function Hero() {
-  useEffect(() => {
-    AOS.init({ duration: 800, once: true });
-  }, []);
-
   return (
-    <section
-      id="hero"
-      data-aos="fade-up"
-         className="pt-24 md:pt-0 min-h-screen flex flex-col-reverse md:flex-row items-center justify-between px-6 md:px-20 text-white"
-
-
-    >
-      {/* Left content */}
-      <div className="flex-1 flex flex-col space-y-6">
-        
-<span className="inline-flex items-center px-3 py-1 rounded-lg border border-blue-400/30 w-auto max-w-max bg-black/20 animate-glow-box">
-  <Sparkles className="sm:w-4 sm:h-4 w-3 h-3 mr-2 text-blue-400 animate-glow-text" />
-  <span className="bg-gradient-to-r from-blue-800 to-cyan-400 bg-clip-text text-transparent sm:text-sm text-[0.7rem] font-medium animate-glow-text">
-    Ready to Innovate
-  </span>
-</span>
-
-
-
-
-        {/* Main title */}
-        <h1 className="text-5xl md:text-6xl font-extrabold">
-          <span className=" text-white">Web</span>{" "} <br />
-          <span className="bg-gradient-to-r from-cyan-400 to-blue-800 bg-clip-text text-transparent ">
-            Developer
-          </span>
-        </h1>
-
-        {/* Typewriter subtitle */}
-        <h2 className="text-2xl md:text-3xl mt-2 text-white-400 font-light">
-          <TypewriterLoop texts={["Software Engineer", "Software Enthusiast"]} />
-        </h2>
-
-        {/* Subtitle */}
-        <p className="text-lg md:text-xl text-gray-300">
-         Creating Innovative, Functional, and User-Friendly Websites for Digital Solutions.
-        </p>
-
-        {/* Skills tags */}
-        <div className="flex flex-wrap gap-2 mt-4">
-          {["React", "Spring Boot", ".NET", "Angular"].map((skill) => (
-            <span
-              key={skill}
-              className="bg-gray-800 px-3 py-1 rounded-full text-sm text-gray-200 border border-gray-700"
-            >
-              {skill}
-            </span>
-          ))}
-        </div>
-
-       <div className="flex space-x-4 mt-6">
-  {/* Projects Button */}
-  <a
-    href="#projects"
-    className="bg-gray-800 text-white px-6 py-2 rounded-lg shadow-md shadow-blue-500/50 hover:bg-blue-600 transition-all duration-300 flex items-center gap-3" 
-  >
-   
-    Projects 
-    <i class="fa-solid fa-arrow-up-right-from-square"></i>
-  </a>
-
-  {/* Contact Button */}
-  <a
-    href="#contact"
-    className="bg-gray-800 text-white px-6 py-2 rounded-lg shadow-md shadow-blue-500/50 hover:bg-blue-600 transition-all duration-300 flex items-center gap-3"
-  >
-   
-    Contact 
-    <i class="fa-regular fa-address-book"></i>
-  </a>
-</div>
-
-        {/* Social icons */}
-       <div className="flex space-x-4 mt-6">
-  {/* GitHub */}
-  <a
-    href="https://github.com/GuedriAhmed"
-    className="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-lg shadow-md hover:bg-gray-500 transition-colors duration-300"
-  >
-    <i className="fab fa-github text-white text-lg"></i>
-  </a>
-
-  {/* LinkedIn */}
-  <a
-    href="https://www.linkedin.com/in/ahmed-guedri-019935288/"
-    className="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-lg shadow-md hover:bg-blue-600 transition-colors duration-300"
-  >
-    <i className="fab fa-linkedin-in text-white text-lg"></i>
-  </a>
-
-  {/* Instagram */}
-  <a
-    href="https://www.instagram.com/ahmed_guedrii/"
-    className="w-10 h-10 flex items-center justify-center bg-gray-800 rounded-lg shadow-md hover:bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 transition-colors duration-300"
-  >
-    <i className="fab fa-instagram text-white text-lg"></i>
-  </a>
-  <a
-    href="https://www.facebook.com/guedri.Midou/"
-    target="_blank"
-    rel="noopener noreferrer"
-    className="w-10 h-10 flex items-center justify-center rounded-lg bg-gray-800 shadow-md hover:shadow-blue-600/50 transition-all duration-300"
-  >
-    <i className="fab fa-facebook-f text-xl text-white hover:text-blue-600"></i>
-  </a>
-</div>
+    <section id="hero" className="relative isolate min-h-screen overflow-hidden">
+      <div className="absolute inset-0">
+        <IntroParticles particleCount={76} linkDistance={82} mouseRadius={150} />
+        <div className="absolute inset-0 bg-[repeating-linear-gradient(90deg,rgba(34,211,238,0.03)_0,rgba(34,211,238,0.03)_1px,transparent_1px,transparent_60px),repeating-linear-gradient(180deg,rgba(34,211,238,0.03)_0,rgba(34,211,238,0.03)_1px,transparent_1px,transparent_60px)]" />
       </div>
 
-      {/* Right image */}
-      <div className=" flex-1 mt-10 md:mt-0 md:w-1/2  " >
-        <img src={heroImage}  data-aos="fade-left" alt="Frontend Illustration" className="animate-image-glow h12 w-116 transition-transform duration-500 ease-in-out transform hover:scale-105 " />
+      <div className="relative mx-auto flex min-h-screen max-w-7xl items-center px-6 pt-24 lg:px-10">
+        <div className="grid w-full items-center gap-14 md:grid-cols-[minmax(0,1fr)_380px]">
+          <div className="max-w-3xl">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-[rgba(21,30,50,0.6)] px-4 py-2 text-[11px] uppercase tracking-[0.24em] text-slate-300 backdrop-blur-xl">
+              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+              Open to opportunities
+            </div>
+
+            <div className="mt-8 space-y-6">
+              <p className="text-xs uppercase tracking-[0.32em] text-cyan-400">Full-Stack Engineer · Digital Product Builder</p>
+              <h1
+                className="font-display text-5xl font-bold tracking-tight text-white sm:text-6xl lg:text-7xl"
+                style={{ textShadow: "0 0 30px rgba(34,211,238,0.3)" }}
+              >
+                Ahmed Guedri
+              </h1>
+              <p className="max-w-xl text-lg leading-8 text-slate-300 md:text-xl">
+                Full-Stack Software Engineer building fast, scalable, and user-focused digital products.
+              </p>
+            </div>
+
+            <div className="mt-10 flex flex-wrap gap-4">
+              <a
+                href="#projects"
+                className="inline-flex items-center gap-2 rounded-lg border border-cyan-500/50 bg-transparent px-6 py-3 text-sm font-medium text-cyan-400 transition-all duration-300 hover:bg-cyan-500/10"
+                style={{ boxShadow: "0 0 20px rgba(34,211,238,0.15)" }}
+              >
+                View Projects
+                <ArrowUpRight className="h-4 w-4" />
+              </a>
+              <a
+                href="#contact"
+                className="inline-flex items-center rounded-lg border border-slate-600 bg-transparent px-6 py-3 text-sm font-medium text-slate-300 transition-colors duration-300 hover:border-slate-400"
+              >
+                Contact Me
+              </a>
+            </div>
+
+            <div className="mt-8 flex items-center gap-4 text-xl">
+              {socialLinks.map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={link.label}
+                  className="text-slate-400 transition-colors duration-300 hover:text-cyan-400"
+                >
+                  <i className={iconMap[link.label]} />
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div className="relative hidden md:block">
+            <div className="rounded-[1.5rem] border border-cyan-500/20 bg-[rgba(21,30,50,0.5)] p-6 backdrop-blur-xl">
+              <div className="mb-4 rounded-xl border border-white/8 bg-[#091321] p-3 font-mono text-[11px] leading-6 text-cyan-300/70">
+                <p>const engineer = &#123;</p>
+                <p className="pl-4">name: &quot;Ahmed Guedri&quot;,</p>
+                <p className="pl-4">stack: [&quot;React&quot;, &quot;Angular&quot;, &quot;Spring Boot&quot;],</p>
+                <p className="pl-4">focus: &quot;Scalable user-first products&quot;</p>
+                <p>&#125;;</p>
+              </div>
+              <div className="overflow-hidden rounded-xl border border-cyan-500/20 bg-[#0B1120]">
+                <img src={heroImage} alt="Ahmed Guedri hero visual" className="h-full w-full object-cover" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <a href="#about" className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 text-cyan-400/50 md:block">
+          <i className="ri-arrow-down-s-line animate-bounce text-3xl" />
+        </a>
       </div>
     </section>
   );

@@ -1,113 +1,59 @@
-import React, { useEffect } from "react";
-import AOS from "aos";
-import "aos/dist/aos.css";
-
-// Import experiences (replace with your actual logo paths)
-import FreelanceLogo from "/experiences/freelance.png";
-import CedimesLogo from "/experiences/cedimes.png";
-import TeamTechLogo from "/experiences/teamtech.png";
-import CNSSLogo from "/experiences/cnss.png";
-import CaveoLogo from "/experiences/caveo.png";
-import PoulinaLogo from "/experiences/poulina.png";
-import CapitalLogo from "/experiences/capital.png";
+import React from "react";
+import { experiences } from "../data/portfolio";
 
 export default function Experiences() {
-  useEffect(() => {
-    AOS.init({ duration: 800, once: true });
-  }, []);
-
-  const experiences = [
-    {
-      company: "Freelance",
-      logo: FreelanceLogo,
-      title: "Full Stack Engineer",
-      type: "Freelance",
-      period: "Feb 2025 - Present · 1 yr 1 mo",
-      location: "Remote",
-      desc: "Developing full-stack applications using modern web technologies for various clients, ensuring responsive and scalable solutions.",
-    },
-    {
-      company: "Capital Immobilier",
-      logo: CapitalLogo,
-      title: "Web Developer → Agent → Community Manager",
-      type: "Full-time",
-      period: "Various Roles",
-      location: "",
-      desc: "Worked in multiple roles including web development, real estate agent, and community management to support the growth of the agency.",
-    },
-    {
-      company: "CEDIMES",
-      logo: CedimesLogo,
-      title: "Full Stack Engineer",
-      type: "Full-time",
-      period: "Jan 2025 - Mar 2025 · 3 mos",
-      location: "",
-      desc: "Redesigned and modernized a 10+ year-old WordPress website into a fully responsive Angular web platform, improving page load speed by 50% and user engagement.",
-    },
-    {
-      company: "Team-tech Tunis",
-      logo: TeamTechLogo,
-      title: "Software Engineer Intern",
-      type: "",
-      period: "Mar 2024 - Aug 2024 · 6 mos",
-      location: "Tunis, Tunisia",
-      desc: `- Engineered a secure web application using Angular and Spring Boot microservices, enhancing user engagement.\n- Designed and implemented a DevOps pipeline, automating 100% of testing and monitoring.\n- Applied Agile/Kanban methodologies for efficient collaboration.\n- Worked on TTWave platform (Spring Boot, Angular, +24 skills).`,
-    },
-    {
-      company: "CNSS - Caisse Nationale de Sécurité Sociale",
-      logo: CNSSLogo,
-      title: "Software Engineer Intern",
-      type: "",
-      period: "Jun 2023 - Aug 2023 · 3 mos",
-      location: "",
-      desc: `Developed a web app for doctors and healthcare management using Spring Boot and Angular.\nImplemented secure authentication and role-based access for data privacy.\nSkills: Eclipse, XML, +5 skills`,
-    },
-    {
-      company: "CAVEO AUTOMOTIVE TUNISIA S.A.",
-      logo: CaveoLogo,
-      title: "Intern in Industrial IT Automation System",
-      type: "Full-time",
-      period: "Mar 2021 - Jun 2021 · 4 mos",
-      location: "Tunis, Tunisia",
-      desc: "Worked on industrial IT automation systems using LaTeX, PLC Programming, and +3 skills.",
-    },
-    {
-      company: "Poulina Group Holding",
-      logo: PoulinaLogo,
-      title: "Intern in Industrial IT Automation System",
-      type: "Full-time",
-      period: "Jun 2020 - Aug 2020 · 3 mos",
-      location: "Tunisia · Remote",
-      desc: "Worked on industrial IT automation systems using LaTeX, PLC Programming, and +1 skill.",
-    },
-    
-  ];
-
   return (
-    <section id="experience" className="py-20" data-aos="fade-up">
-      <div className="container mx-auto px-6">
-        <h2 className="text-3xl font-bold text-center mb-12 text-white">Experience</h2>
+    <section id="experience" className="mx-auto max-w-7xl px-6 py-24 lg:px-10">
+      <div className="mb-12 max-w-3xl">
+        <p className="text-xs uppercase tracking-[0.3em] text-cyan-300">Experience</p>
+        <h2 className="mt-4 text-3xl font-semibold text-white sm:text-4xl">A track record of delivering impact</h2>
+      </div>
+
+      <div className="relative">
+        <div className="absolute left-3 top-0 h-full w-px bg-gradient-to-b from-cyan-300/0 via-cyan-300/60 to-cyan-300/0 md:left-1/2" />
 
         <div className="space-y-8">
-          {experiences.map((exp, index) => (
+          {experiences.slice(0, 5).map((experience, index) => (
             <div
-              key={index}
-              className="flex items-start gap-6 bg-gray-800/50 backdrop-blur-md border border-gray-700 rounded-xl p-6 shadow-lg hover:shadow-2xl transition duration-500"
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
+              key={`${experience.company}-${experience.period}`}
+              className={`relative md:grid md:grid-cols-2 md:gap-10 ${index % 2 === 0 ? "" : ""}`}
             >
-              <img
-                src={exp.logo}
-                alt={exp.company}
-                className="w-16 h-16 object-contain rounded-lg"
-              />
-              <div className="text-left flex-1">
-                <h3 className="text-xl font-semibold text-cyan-400">{exp.title}</h3>
-                <p className="text-gray-300 font-medium">{exp.company} {exp.type && `· ${exp.type}`}</p>
-                <p className="text-gray-400 italic text-sm mb-2">{exp.period}</p>
-                {exp.location && <p className="text-gray-400 italic text-sm mb-2">{exp.location}</p>}
-                <p className="text-gray-300 whitespace-pre-line">{exp.desc}</p>
+              <div className={`mb-4 md:mb-0 ${index % 2 === 0 ? "md:pr-10" : "md:col-start-2 md:pl-10"}`}>
+                <div className="ml-10 rounded-[1.9rem] border border-white/8 bg-white/[0.035] p-6 shadow-[0_18px_60px_rgba(2,8,23,0.24)] backdrop-blur-xl md:ml-0">
+                  <div className="flex items-start gap-4">
+                    <img src={experience.logo} alt={experience.company} className="h-14 w-14 rounded-2xl object-contain bg-white/5 p-2" />
+                    <div className="flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h3 className="text-lg font-semibold text-white">{experience.title}</h3>
+                        <span className="rounded-full border border-cyan-300/15 bg-cyan-400/10 px-2.5 py-1 text-[10px] uppercase tracking-[0.24em] text-cyan-200">
+                          {experience.type}
+                        </span>
+                      </div>
+                      <p className="mt-1 text-sm font-medium text-cyan-300">{experience.company}</p>
+                      <p className="mt-3 text-sm leading-7 text-slate-300">{experience.desc}</p>
+                      <div className="mt-4 flex flex-wrap gap-2">
+                        {experience.highlights.map((highlight) => (
+                          <span
+                            key={highlight}
+                            className="rounded-full border border-white/10 bg-[#0a1423] px-3 py-1.5 text-[11px] uppercase tracking-[0.16em] text-slate-300"
+                          >
+                            {highlight}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
+
+              <div className={`ml-10 flex items-start md:ml-0 ${index % 2 === 0 ? "md:items-center" : "md:col-start-1 md:row-start-1 md:justify-end md:pr-10"}`}>
+                <div className="rounded-2xl px-4 py-3 text-left md:text-right">
+                  <p className="text-xs uppercase tracking-[0.28em] text-cyan-300">{experience.period}</p>
+                  {experience.location ? <p className="mt-2 text-sm text-slate-400">{experience.location}</p> : null}
+                </div>
+              </div>
+
+              <span className="absolute left-3 top-8 h-3 w-3 rounded-full border-4 border-[#081120] bg-cyan-300 shadow-[0_0_20px_rgba(103,232,249,0.7)] md:left-1/2 md:-translate-x-1/2" />
             </div>
           ))}
         </div>

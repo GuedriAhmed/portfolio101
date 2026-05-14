@@ -1,201 +1,157 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Code2, Github, Globe, User } from "lucide-react";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import React, { useEffect, useMemo, useState } from "react";
+import IntroParticles from "./IntroParticles";
 
-const TypewriterEffect = ({ text }) => {
-  const [displayText, setDisplayText] = useState("");
+const codeSnippets = [
+  "const portfolio = new PremiumExperience();",
+  "<Component skill='fullstack' />",
+  "deploy({ stack: ['React', 'Spring Boot'] })",
+  "while(building) { improve(); }",
+  "animate.in('hero-content')",
+  "ship({ quality: 'high' })",
+];
+
+export default function WelcomeScreen({ onLoadingComplete }) {
+  const [visibleName, setVisibleName] = useState("");
+  const [progress, setProgress] = useState(0);
+  const [typingComplete, setTypingComplete] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
+  const fullName = "Ahmed Guedri";
 
   useEffect(() => {
-    let index = 0;
-    const timer = setInterval(() => {
-      if (index <= text.length) {
-        setDisplayText(text.slice(0, index));
-        index++;
-      } else {
-        clearInterval(timer);
+    document.body.classList.add("no-scroll");
+
+    let nameIndex = 0;
+    const typeInterval = setInterval(() => {
+      nameIndex += 1;
+      setVisibleName(fullName.slice(0, nameIndex));
+      if (nameIndex >= fullName.length) {
+        clearInterval(typeInterval);
+        setTypingComplete(true);
       }
-    }, 260);
+    }, 110);
 
-    return () => clearInterval(timer);
-  }, [text]);
-
-  return (
-    <span className="inline-block">
-      {displayText}
-      <span className="animate-pulse">|</span>
-    </span>
-  );
-};
-
-const BackgroundEffect = () => (
-  <div className="absolute inset-0 overflow-hidden">
-    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 blur-3xl animate-pulse" />
-    <div className="absolute inset-0 bg-gradient-to-tr from-cyan-400/10 via-transparent to-blue-500/10 blur-2xl animate-float" />
-  </div>
-);
-
-const IconButton = ({ Icon }) => (
-  <div className="relative group hover:scale-110 transition-transform duration-300">
-    <div className="absolute -inset-2 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full blur opacity-30 group-hover:opacity-75 transition duration-300" />
-    <div className="relative p-2 sm:p-3 bg-black/50 backdrop-blur-sm rounded-full border border-white/10">
-      <Icon className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" />
-    </div>
-  </div>
-);
-
-const WelcomeScreen = ({ onLoadingComplete }) => {
-  const [isLoading, setIsLoading] = useState(true);
+    return () => {
+      document.body.classList.remove("no-scroll");
+      clearInterval(typeInterval);
+    };
+  }, []);
 
   useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      once: false,
-      mirror: false,
-    });
+    if (!typingComplete) return;
 
-    const timer = setTimeout(() => {
-      setIsLoading(false);
+    const progressInterval = setInterval(() => {
+      setProgress((value) => {
+        if (value >= 100) {
+          clearInterval(progressInterval);
+          return 100;
+        }
+
+        const step = value < 45 ? 3 : value < 80 ? 2 : 1;
+        return Math.min(value + step, 100);
+      });
+    }, 55);
+
+    return () => clearInterval(progressInterval);
+  }, [typingComplete]);
+
+  useEffect(() => {
+    if (progress !== 100 || isExiting) return;
+
+    const exitTimer = setTimeout(() => {
+      setIsExiting(true);
       setTimeout(() => {
+        document.body.classList.remove("no-scroll");
         onLoadingComplete?.();
-      }, 1000);
-    }, 4000);
+      }, 1300);
+    }, 180);
 
-    return () => clearTimeout(timer);
-  }, [onLoadingComplete]);
+    return () => clearTimeout(exitTimer);
+  }, [isExiting, onLoadingComplete, progress]);
 
-  const containerVariants = {
-    exit: {
-      opacity: 0,
-      scale: 1.1,
-      filter: "blur(10px)",
-      transition: {
-        duration: 0.8,
-        ease: "easeInOut",
-        when: "beforeChildren",
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const childVariants = {
-    exit: {
-      y: -20,
-      opacity: 0,
-      transition: {
-        duration: 0.4,
-        ease: "easeInOut",
-      },
-    },
-  };
+  const snippetLayout = useMemo(
+    () =>
+      codeSnippets.map((snippet, index) => ({
+        snippet,
+        style: {
+          top: `${14 + (index % 3) * 17}%`,
+          left: `${5 + (index * 19) % 78}%`,
+          animationDelay: `${index * 1.2}s`,
+        },
+      })),
+    []
+  );
 
   return (
-    <AnimatePresence>
-      {isLoading && (
-        <motion.div
-          className="fixed inset-0 bg-[#030014]"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit="exit"
-          variants={containerVariants}
+    <div
+      className={`fixed inset-0 z-[100] overflow-hidden bg-[#050914] transition-all duration-[1300ms] ease-out ${
+        isExiting ? "scale-110 blur-[12px] opacity-0" : "scale-100 blur-0 opacity-100"
+      }`}
+    >
+      <div className="absolute inset-0 bg-[#050914]" />
+      <IntroParticles particleCount={68} linkDistance={80} mouseRadius={150} />
+      <div className="absolute inset-0 bg-[repeating-linear-gradient(90deg,rgba(34,211,238,0.03)_0,rgba(34,211,238,0.03)_1px,transparent_1px,transparent_60px),repeating-linear-gradient(180deg,rgba(34,211,238,0.03)_0,rgba(34,211,238,0.03)_1px,transparent_1px,transparent_60px)]" />
+
+      <div className="absolute left-[5%] top-[18%] h-[220px] w-[220px] rounded-full bg-cyan-400/10 blur-[120px] animate-orb-drift" />
+      <div className="absolute right-[8%] top-[12%] h-[320px] w-[320px] rounded-full bg-blue-500/10 blur-[140px] animate-orb-drift-delayed" />
+      <div className="absolute bottom-[10%] left-[40%] h-[260px] w-[260px] rounded-full bg-cyan-300/8 blur-[150px] animate-orb-drift-slow" />
+
+      {snippetLayout.map((item) => (
+        <span
+          key={item.snippet}
+          className="absolute hidden font-mono text-sm text-cyan-400/20 md:block animate-code-drift"
+          style={item.style}
         >
-          <BackgroundEffect />
+          {item.snippet}
+        </span>
+      ))}
 
-          <div className="relative min-h-screen flex items-center justify-center px-4">
-            <div className="w-full max-w-4xl mx-auto">
-              {/* Icons */}
-              <motion.div
-                className="flex justify-center gap-3 sm:gap-4 md:gap-8 mb-6 sm:mb-8 md:mb-12"
-                variants={childVariants}
-              >
-                {[Code2, User, Github].map((Icon, index) => (
-                  <div
-                    key={index}
-                    data-aos="fade-down"
-                    data-aos-delay={index * 200}
-                  >
-                    <IconButton Icon={Icon} />
-                  </div>
-                ))}
-              </motion.div>
+      <div className="absolute left-1/2 top-1/2 w-full max-w-4xl -translate-x-1/2 -translate-y-1/2 px-6 text-center">
+        <div className="relative mx-auto max-w-4xl">
+          <span className="absolute -left-2 top-[42%] hidden text-3xl text-cyan-500/40 animate-bracket-pulse md:block">┌</span>
+          <span className="absolute -right-2 top-[42%] hidden text-3xl text-cyan-500/40 animate-bracket-pulse md:block">┐</span>
+          <span className="absolute -bottom-10 left-0 hidden text-3xl text-cyan-500/40 animate-bracket-pulse md:block">└</span>
+          <span className="absolute -bottom-10 right-0 hidden text-3xl text-cyan-500/40 animate-bracket-pulse md:block">┘</span>
 
-              {/* Welcome Text */}
-              <motion.div
-                className="text-center mb-6 sm:mb-8 md:mb-12"
-                variants={childVariants}
-              >
-                <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold space-y-2 sm:space-y-4">
-                  <div className="mb-2 sm:mb-4">
-                    <span
-                      data-aos="fade-right"
-                      data-aos-delay="200"
-                      className="inline-block px-2 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
-                    >
-                      Welcome
-                    </span>{" "}
-                    <span
-                      data-aos="fade-right"
-                      data-aos-delay="400"
-                      className="inline-block px-2 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
-                    >
-                      To
-                    </span>{" "}
-                    <span
-                      data-aos="fade-right"
-                      data-aos-delay="600"
-                      className="inline-block px-2 bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent"
-                    >
-                      My
-                    </span>
-                  </div>
-                  <div>
-                    <span
-                      data-aos="fade-up"
-                      data-aos-delay="800"
-                      className="inline-block px-2 bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent"
-                    >
-                      Portfolio
-                    </span>{" "}
-                    <span
-                      data-aos="fade-up"
-                      data-aos-delay="1000"
-                      className="inline-block px-2 bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent"
-                    >
-                      Website
-                    </span>
-                  </div>
-                </h1>
-              </motion.div>
+          <div className="inline-flex rounded-full border border-cyan-500/30 bg-[rgba(21,30,50,0.6)] px-4 py-1.5 text-xs tracking-[0.2em] text-cyan-300 backdrop-blur-xl">
+            SYSTEM.INIT()
+          </div>
 
-              {/* Website Link */}
-              <motion.div
-                className="text-center"
-                variants={childVariants}
-                data-aos="fade-up"
-                data-aos-delay="1200"
-              >
-                <a
-                  href="https://www.ahmed.guedri.id"
-                  className="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-full relative group hover:scale-105 transition-transform duration-300"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-blue-600/20 rounded-full blur-md group-hover:blur-lg transition-all duration-300" />
-                  <div className="relative flex items-center gap-2 text-lg sm:text-xl md:text-2xl">
-                    <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-cyan-400" />
-                    <span className="bg-gradient-to-r from-cyan-500 to-blue-600 bg-clip-text text-transparent">
-                      <TypewriterEffect text="www.ahmed.guedri.id" />
-                    </span>
-                  </div>
-                </a>
-              </motion.div>
+          <h1 className="font-display mt-8 text-5xl font-bold tracking-tight text-white md:text-7xl">
+            {visibleName}
+            <span className="ml-1 inline-block text-cyan-400 animate-cursor-blink">|</span>
+          </h1>
+
+          <p
+            className={`mx-auto mt-6 max-w-2xl font-mono text-base text-slate-400 transition-all duration-500 ${
+              typingComplete ? "translate-y-0 opacity-100" : "translate-y-[10px] opacity-0"
+            }`}
+          >
+            Full-Stack Engineer · Building digital experiences
+          </p>
+
+          <div
+            className={`mx-auto mt-14 max-w-[320px] transition-all duration-500 ${
+              typingComplete ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+            }`}
+          >
+            <div className="h-[2px] overflow-visible rounded-full bg-[rgba(51,65,85,0.3)]">
+              <div className="relative h-[2px] rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 transition-all duration-75 ease-out" style={{ width: `${progress}%` }}>
+                <span className="absolute right-0 top-1/2 h-[6px] w-[6px] -translate-y-1/2 translate-x-1/2 rounded-full bg-cyan-300 shadow-[0_0_12px_rgba(34,211,238,0.85)]" />
+              </div>
+            </div>
+            <div className="mt-4 flex items-center justify-between text-xs uppercase tracking-[0.24em]">
+              <span className="text-slate-500">{progress === 100 ? "Complete" : "Loading..."}</span>
+              <span className="text-cyan-400">{progress}%</span>
             </div>
           </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-};
 
-export default WelcomeScreen;
+          <div className="mx-auto mt-14 flex max-w-[200px] items-center justify-center gap-3">
+            <span className="h-px flex-1 bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
+            <span className="h-[4px] w-[4px] rounded-full bg-cyan-400" />
+            <span className="h-px flex-1 bg-gradient-to-r from-transparent via-cyan-500/40 to-transparent" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
