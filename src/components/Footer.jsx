@@ -1,13 +1,14 @@
 import React from "react";
 import { socialLinks } from "../data/portfolio";
+import Reveal from "./Reveal";
 
 export default function Footer() {
   return (
     <footer className="relative mt-10 overflow-hidden border-t border-white/6 bg-[#081120]">
-      <div className="absolute inset-x-0 bottom-0 text-center text-[5rem] font-semibold tracking-[0.3em] text-white/[0.03] sm:text-[7rem]">
+      <div className="absolute inset-x-0 bottom-0 text-center text-[4rem] font-semibold tracking-[0.26em] text-white/[0.025] sm:text-[6rem]">
         GUEDRI
       </div>
-      <div className="relative mx-auto grid max-w-7xl gap-8 px-6 py-14 lg:grid-cols-[1.2fr_0.7fr_0.7fr_1fr] lg:px-10">
+      <Reveal className="relative mx-auto grid max-w-7xl gap-8 px-6 py-12 lg:grid-cols-[1.2fr_0.7fr_0.7fr_1fr] lg:px-10">
         <div>
           <p className="text-lg font-semibold text-white">Ahmed Guedri</p>
           <p className="mt-3 max-w-sm text-sm leading-7 text-slate-400">
@@ -39,13 +40,13 @@ export default function Footer() {
           <p className="text-sm uppercase tracking-[0.28em] text-slate-400">Social Links</p>
           <div className="mt-4 space-y-2 text-sm text-slate-300">
             {socialLinks.map((link) => (
-              <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="block hover:text-white">
+              <a key={link.label} href={link.href} target="_blank" rel="noopener noreferrer" className="interactive-hover block hover:text-white">
                 {link.label}
               </a>
             ))}
           </div>
         </div>
-      </div>
+      </Reveal>
       <div className="relative mx-auto max-w-7xl px-6 pb-8 text-sm text-slate-500 lg:px-10">
         © {new Date().getFullYear()} Ahmed Guedri Portfolio. All rights reserved.
       </div>

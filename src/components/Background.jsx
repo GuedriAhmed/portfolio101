@@ -14,6 +14,7 @@ export default function AnimatedBackground() {
       <div className="absolute left-[-12%] top-[8%] h-[24rem] w-[24rem] rounded-full bg-cyan-400/12 blur-[130px]" />
       <div className="absolute right-[-8%] top-[18%] h-[28rem] w-[28rem] rounded-full bg-blue-500/14 blur-[140px]" />
       <div className="absolute bottom-[-10%] left-[28%] h-[24rem] w-[24rem] rounded-full bg-sky-300/10 blur-[150px]" />
+      
       <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(148,163,184,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.05)_1px,transparent_1px)] bg-[size:78px_78px] opacity-35" />
       {stars.map((star) => (
         <span

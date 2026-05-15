@@ -132,3 +132,30 @@ body.no-scroll {
 .animate-cursor-blink {
   animation: cursor-blink 1s step-end infinite;
 }
+
+@keyframes hero-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -6px, 0);
+  }
+}
+
+.animate-hero-float {
+  animation: hero-float 6s ease-in-out infinite;
+}
+
+.interactive-hover {
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    background-color 180ms ease,
+    opacity 180ms ease;
+  will-change: transform;
+}
+
+.interactive-hover:hover {
+  transform: translateY(-2px);
+}

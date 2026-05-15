@@ -30,7 +30,7 @@ export const skillCategories = [
 
 export const stats = [
   { value: "15+", label: "Projects Built" },
-  { value: "4+", label: "Years of Experience" },
+  { value: "1+", label: "Year of Experience" },
   { value: "20+", label: "Core Technologies" },
 ];
 

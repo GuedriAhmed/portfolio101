@@ -26,6 +26,8 @@ export default function IntroParticles({
       y: Math.random(),
       vx: (Math.random() - 0.5) * 0.0007,
       vy: (Math.random() - 0.5) * 0.0007,
+      baseVx: (Math.random() - 0.5) * 0.0007,
+      baseVy: (Math.random() - 0.5) * 0.0007,
       radius: 1 + Math.random() * 1.8,
     }));
 
@@ -61,8 +63,8 @@ export default function IntroParticles({
         if (particle.x <= 0 || particle.x >= 1) particle.vx *= -1;
         if (particle.y <= 0 || particle.y >= 1) particle.vy *= -1;
 
-        particle.vx *= 0.995;
-        particle.vy *= 0.995;
+        particle.vx = particle.vx * 0.992 + particle.baseVx * 0.008;
+        particle.vy = particle.vy * 0.992 + particle.baseVy * 0.008;
       });
 
       for (let i = 0; i < particles.length; i += 1) {
