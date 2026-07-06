@@ -13,7 +13,6 @@ export default function Projects() {
         <p className="text-xs uppercase tracking-[0.3em] text-cyan-300">Selected Work</p>
         <h2 className="mt-3 text-[1.9rem] font-semibold text-white sm:text-[2.2rem]">Selected work that speaks for itself</h2>
       </Reveal>
-
       <div className="grid gap-6 lg:grid-cols-2">
         {featuredProjects.map((project, index) => (
           <Reveal
