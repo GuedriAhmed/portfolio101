@@ -9,6 +9,7 @@ const navItems = [
   { href: "#experience", label: "Experience" },
   { href: "#projects", label: "Projects" },
   { href: "#contact", label: "Contact" },
+  
 ];
 
 export default function Navbar({ activeSection: activeSectionProp = "hero" }) {
